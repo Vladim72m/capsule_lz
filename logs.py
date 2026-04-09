@@ -4,13 +4,12 @@ from datetime import datetime
 
 def log(func):
     def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
+        result = func(*args, **kwargs)      # Выполняем исходную функцию и сохраняем её результат
 
         file_path = "logs.csv"
-        now = datetime.now()
+        now = datetime.now()    # текущее время
 
-        # авто‑id
-        if os.path.exists(file_path):
+        if os.path.exists(file_path):     # Определяем ID новой записи:
             current_id = pd.read_csv(file_path).shape[0]
         else:
             current_id = 0
@@ -23,7 +22,7 @@ def log(func):
             "Time": now.strftime("%H:%M:%S")
         }])
 
-        new_row.to_csv(
+        new_row.to_csv(     # Добавляем строку в CSV:
             file_path,
             mode='a',
             header=not os.path.exists(file_path),
